@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lintang's Y2K Portfolio - Sistem Informasi UNESA</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: #fce4ec;
+            background-image: 
+                radial-gradient(#f8bbd0 2px, transparent 2px),
+                linear-gradient(to right, #f8bbd0 1px, transparent 1px),
+                linear-gradient(to bottom, #f8bbd0 1px, transparent 1px);
+            background-size: 30px 30px, 20px 20px, 20px 20px;
+            color: #333;
+            padding-bottom: 60px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Top Marquee Banner */
+        .top-banner {
+            background: #ff80ab;
+            color: #fff;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+            border-bottom: 2px solid #f50057;
+            letter-spacing: 1px;
+        }
+
+        /* Header Logo Section */
+        .header-logo {
+            text-align: center;
+            padding: 25px 10px 10px 10px;
+        }
+
+        .y2k-title {
+            font-family: 'VT323', monospace;
+            font-size: 3.8rem;
+            color: #ff1744;
+            text-shadow: 3px 3px 0px #ffe5ec, 5px 5px 0px #d50000;
+            letter-spacing: 2px;
+        }
+
+        /* Y2K Window Component */
+        .window {
+            background: #fff0f5;
+            border: 3px solid #ff4081;
+            box-shadow: 6px 6px 0px #ff80ab, 6px 6px 0px 2px #d50000;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .window-header {
+            background: linear-gradient(90deg, #ff4081, #ff80ab);
+            color: white;
+            padding: 6px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-bottom: 2px solid #ff4081;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 4px;
+        }
+
+        .btn-win {
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border: 1px solid #d50000;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d50000;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 1px 1px 0px #000;
+        }
+
+        .window-body {
+            padding: 20px;
+        }
+
+        /* Grid Layout */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        /* Sidebar Profile & Controls */
+        .profile-img-frame {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 15px auto;
+            border-radius: 50%;
+            border: 3px dashed #ff4081;
+            padding: 5px;
+            background: #fff;
+        }
+
+        .profile-img-frame img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .badge-tag {
+            background: #ff4081;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+            margin: 3px;
+        }
+
+        .y2k-btn {
+            background: #ff80ab;
+            color: white;
+            border: 2px solid #ff1744;
+            padding: 8px 16px;
+            font-weight: 700;
+            border-radius: 20px;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 3px 3px 0px #ff1744;
+            transition: all 0.1s;
+            cursor: pointer;
+        }
+
+        .y2k-btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #ff1744;
+        }
+
+        /* Content Styling */
+        h2.section-heading {
+            font-family: 'VT323', monospace;
+            font-size: 2rem;
+            color: #d50000;
+            margin-bottom: 10px;
+        }
+
+        p.text-desc {
+            font-size: 0.92rem;
+            color: #444;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .card-item {
+            background: #fff;
+            border: 2px solid #ff80ab;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 3px 3px 0px #f8bbd0;
+        }
+
+        .card-item h3 {
+            font-size: 1rem;
+            color: #c2185b;
+            margin-bottom: 5px;
+        }
+
+        /* Snake Game Styles */
+        .game-area {
+            text-align: center;
+        }
+
+        #gameCanvas {
+            background-color: #fff;
+            border: 2px solid #ff4081;
+            border-radius: 6px;
+            display: block;
+            margin: 10px auto;
+            box-shadow: 2px 2px 0px #ff80ab;
+        }
+
+        .game-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .btn-game-ctrl {
+            background: #ff80ab;
+            color: white;
+            border: 1px solid #d50000;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 1px 1px 0px #d50000;
+        }
+
+        .btn-game-ctrl:active {
+            transform: translate(1px, 1px);
+            box-shadow: none;
+        }
+
+        .reward-btn {
+            display: none;
+            background: #4caf50;
+            color: white;
+            border: 2px solid #2e7d32;
+            padding: 10px 15px;
+            font-weight: bold;
+            border-radius: 20px;
+            text-decoration: none;
+            box-shadow: 3px 3px 0px #1b5e20;
+            margin-top: 10px;
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px); }
+        }
+
+        /* Taskbar Windows 98 Style */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: #f8bbd0;
+            border-top: 3px solid #ff4081;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            z-index: 2000;
+        }
+
+        .start-btn {
+            background: #ff4081;
+            color: white;
+            border: 2px outset #ff80ab;
+            padding: 3px 12px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .taskbar-time {
+            background: #fff;
+            border: 2px inset #ff80ab;
+            padding: 2px 10px;
+            font-family: 'VT323', monospace;
+            font-size: 1.1rem;
+            color: #d50000;
+        }
+
+        /* Star Sparkle Particles */
+        .star-particle {
+            position: absolute;
+            pointer-events: none;
+            font-size: 18px;
+            user-select: none;
+            z-index: 9999;
+            animation: floatAndFade 0.8s ease-out forwards;
+        }
+
+        @keyframes floatAndFade {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--dx), var(--dy)) scale(1.5) rotate(180deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Marquee Banner -->
+    <div class="top-banner">
+        ✨ WELCOME TO LINTANG'S DIGITAL WORLD ✨ CREATIVE UI/UX DESIGNER ✨ SISTEM INFORMASI UNESA ✨
+    </div>
+
+    <!-- Header Logo -->
+    <div class="header-logo">
+        <h1 class="y2k-title">LINTANG ADISTYA TAMA</h1>
+        <p style="font-size: 0.9rem; color: #c2185b; font-weight: 600;">✧*｡ Y2K Portfolio & Digital Playground ｡*✧</p>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            
+            <!-- Sidebar / Left Window -->
+            <div class="sidebar">
+                <!-- Profile Window -->
+                <div class="window">
+                    <div class="window-header">
+                        <span><i class="fa-solid fa-user"></i> profile.jpg</span>
+                        <div class="window-controls">
+                            <span class="btn-win">_</span>
+                            <span class="btn-win">X</span>
+                        </div>
+                    </div>
+                    <div class="window-body" style="text-align: center;">
+                        <div class="profile-img-frame">
+                            <img src="foto.png" alt="Lintang Adistya Tama">
+                        </div>
+                        <h3 style="font-size: 1.1rem; color: #d50000;">Lintang Adistya Tama</h3>
+                        <p style="font-size: 0.8rem; color: #888; margin-bottom: 10px;">NIM: 26051214099</p>
+                        <span class="badge-tag">SI UNESA 2026</span>
+                        <span class="badge-tag">UI/UX Enthusiast</span>
+                    </div>
+                </div>
+
+                <!-- Contact Window -->
+                <div class="window">
+                    <div class="window-header">
+                        <span><i class="fa-solid fa-envelope"></i> contact_me.exe</span>
+                        <div class="window-controls">
+                            <span class="btn-win">X</span>
+                        </div>
+                    </div>
+                    <div class="window-body">
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <!-- Copy Email Interaktif -->
+                            <a href="javascript:void(0);" onclick="navigator.clipboard.writeText('26051214099@mhs.unesa.ac.id'); playSound('pop'); alert('Email berhasil disalin: 26051214099@mhs.unesa.ac.id');" class="y2k-btn" style="text-align: center; font-size: 0.8rem;">
+                                <i class="fa-solid fa-envelope"></i> Copy Email
+                            </a>
+                            <a href="https://github.com/Lintang-Tmaa" target="_blank" onclick="playSound('pop')" class="y2k-btn" style="text-align: center; font-size: 0.8rem;">
+                                <i class="fa-brands fa-github"></i> GitHub Profile
+                            </a>
+                            <a href="https://linkedin.com/in/lintangadistyatama15" target="_blank" onclick="playSound('pop')" class="y2k-btn" style="text-align: center; font-size: 0.8rem;">
+                                <i class="fa-brands fa-linkedin"></i> LinkedIn Profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Snake Game Window -->
+                <div class="window">
+                    <div class="window-header">
+                        <span><i class="fa-solid fa-gamepad"></i> snake_game.exe</span>
+                        <div class="window-controls">
+                            <span class="btn-win">X</span>
+                        </div>
+                    </div>
+                    <div class="window-body game-area">
+                        <p style="font-size: 0.8rem; font-weight: bold; color: #c2185b;">Makan 10 🍎 untuk Unlock CV!</p>
+                        <p style="font-family: 'VT323', monospace; font-size: 1.4rem; color: #d50000; margin-top: 5px;" id="scoreBoard">Apel: 0 / 10</p>
+                        
+                        <canvas id="gameCanvas" width="200" height="200"></canvas>
+                        
+                        <div class="game-controls">
+                            <button class="btn-game-ctrl" onclick="changeDir('UP')">▲</button>
+                            <div>
+                                <button class="btn-game-ctrl" onclick="changeDir('LEFT')">◄</button>
+                                <button class="btn-game-ctrl" onclick="changeDir('DOWN')">▼</button>
+                                <button class="btn-game-ctrl" onclick="changeDir('RIGHT')">►</button>
+                            </div>
+                        </div>
+
+                        <!-- Link Rahasia ke CV jika tamat -->
+                        <a href="cv.pdf" target="_blank" id="rewardBtn" class="reward-btn" onclick="playSound('win')">
+                            🎉 UNLOCK CV (PDF) 🎉
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="main-content">
+                
+                <!-- About Me Window -->
+                <div class="window">
+                    <div class="window-header">
+                        <span><i class="fa-solid fa-heart"></i> about_me.txt</span>
+                        <div class="window-controls">
+                            <span class="btn-win">_</span>
+                            <span class="btn-win">X</span>
+                        </div>
+                    </div>
+                    <div class="window-body">
+                        <h2 class="section-heading">★ ABOUT ME ★</h2>
+                        <p class="text-desc">
+                            Mahasiswa baru program studi Sistem Informasi dengan ketertarikan tinggi pada dunia UI/UX Design dan pembuatan antarmuka digital yang estetis. Memiliki pengalaman praktis dalam pengelolaan aset visual, tata letak (layout), dan desain grafis menggunakan perangkat kreatif modern. Bersemangat untuk mempelajari riset pengguna dan mengembangkan solusi produk digital yang intuitif.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- What I Can Do Window -->
+                <div class="window">
+                    <div class="window-header">
+                        <span><i class="fa-solid fa-wand-magic-sparkles"></i> capabilities.dll</span>
+                        <div class="window-controls">
+                            <span class="btn-win">X</span>
+                        </div>
+                    </div>
+                    <div class="window-body">
+                        <h2 class="section-heading">★ WHAT I CAN DO ★</h2>
+                        <div class="card-item">
+                            <h3>01. UI/UX & Desain Grafis</h3>
+                            <p class="text-desc">Perancangan antarmuka pengguna, tata letak, wireframing, serta pengelolaan aset visual kreatif.</p>
+                            <div>
+                                <span class="badge-tag">UI/UX Design</span>
+                                <span class="badge-tag">Canva</span>
+                                <span class="badge-tag">Ibis Paint</span>
+                            </div>
+                        </div>
+                        <div class="card-item">
+                            <h3>02. Media & Organisasi</h3>
+                            <p class="text-desc">Penyuntingan video kreatif, publikasi visual, dekorasi acara, serta kerja sama tim yang adaptif.</p>
+                            <div>
+                                <span class="badge-tag">CapCut</span>
+                                <span class="badge-tag">Publikasi & Dekorasi</span>
+                                <span class="badge-tag">Komunikasi Tim</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievements Window -->
+                <div class="window">
+                    <div class="window-header">
+                        <span><i class="fa-solid fa-trophy"></i> achievements.log</span>
+                        <div class="window-controls">
+                            <span class="btn-win">X</span>
+                        </div>
+                    </div>
+                    <div class="window-body">
+                        <h2 class="section-heading">★ ACHIEVEMENTS ★</h2>
+                        <div class="card-item">
+                            <h3>1. Anggota divisi Pubdek PMR SMA Negeri 1 Sidoarjo</h3>
+                            <p class="text-desc">Aktif berkontribusi mengelola publikasi dan dekorasi selama 2 tahun (Januari 2024 - Desember 2025).</p>
+                        </div>
+                        <div class="card-item">
+                            <h3>2. Finalis Infografis Internasional PHIC (Public Health Innovative Competition)</h3>
+                            <p class="text-desc">Diselenggarakan oleh BEM FKM Universitas Airlangga. Tahun 2025 Tingkat SMA.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education & Activities Window -->
+                <div class="window">
+                    <div class="window-header">
+                        <span><i class="fa-solid fa-graduation-cap"></i> education.doc</span>
+                        <div class="window-controls">
+                            <span class="btn-win">X</span>
+                        </div>
+                    </div>
+                    <div class="window-body">
+                        <h2 class="section-heading">★ PENDIDIKAN & AKTIVITAS ★</h2>
+                        <p class="text-desc">
+                            Mahasiswa S1 Sistem Informasi di Universitas Negeri Surabaya (UNESA) dengan minat mendalam di bidang UI/UX Design. Aktif mengembangkan soft skill dan kepemimpinan melalui UKM UKIM UNESA. Tertarik untuk mempelajari interaksi manusia dan komputer, riset pengguna, serta perancangan antarmuka digital yang intuitif dan solutif.
+                        </p>
+                        <p style="font-weight: bold; color: #ff1744; font-size: 0.9rem;">Status: Aktif (2026-2030)</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Windows Retro Taskbar -->
+    <div class="taskbar">
+        <button class="start-btn" onclick="playSound('pop')">
+            <i class="fa-solid fa-heart"></i> Start
+        </button>
+        <div class="taskbar-time">
+            2026-10-30 21:54
+        </div>
+    </div>
+
+    <!-- Web Audio API Sound Effects Synthesizer -->
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'eat') {
+                // Sound: High Retro Chime
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'win') {
+                // Sound: Victory Fanfare
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+                osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
+                osc.frequency.setValueAtTime(1046.50, audioCtx.currentTime + 0.3); // C6
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.5);
+            } else if (type === 'over') {
+                // Sound: Game Over Buzz
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.25);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.25);
+            } else if (type === 'pop') {
+                // Sound: Retro UI Click
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.05);
+            }
+        }
+    </script>
+
+    <!-- Star Click Effect Script -->
+    <script>
+        const starIcons = ['✨', '⭐', '🌸', '💖', '💫'];
+
+        document.addEventListener('click', function(e) {
+            // Spawn 5-7 particles per click
+            const count = Math.floor(Math.random() * 3) + 5;
+            for (let i = 0; i < count; i++) {
+                createStar(e.pageX, e.pageY);
+            }
+        });
+
+        function createStar(x, y) {
+            const star = document.createElement('span');
+            star.className = 'star-particle';
+            star.innerText = starIcons[Math.floor(Math.random() * starIcons.length)];
+            
+            // Random Direction Output
+            const dx = (Math.random() - 0.5) * 120 + 'px';
+            const dy = (Math.random() - 0.5) * 120 + 'px';
+
+            star.style.left = x + 'px';
+            star.style.top = y + 'px';
+            star.style.setProperty('--dx', dx);
+            star.style.setProperty('--dy', dy);
+
+            document.body.appendChild(star);
+
+            setTimeout(() => {
+                star.remove();
+            }, 800);
+        }
+    </script>
+
+    <!-- Snake Game Script -->
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        const box = 10;
+        let score = 0;
+        let snake = [{ x: 9 * box, y: 10 * box }];
+        let food = {
+            x: Math.floor(Math.random() * 19 + 1) * box,
+            y: Math.floor(Math.random() * 19 + 1) * box
+        };
+        let d = "RIGHT";
+        let gameActive = true;
+
+        document.addEventListener("keydown", direction);
+
+        function direction(event) {
+            if (event.keyCode == 37 && d != "RIGHT") { d = "LEFT"; playSound('pop'); }
+            else if (event.keyCode == 38 && d != "DOWN") { d = "UP"; playSound('pop'); }
+            else if (event.keyCode == 39 && d != "LEFT") { d = "RIGHT"; playSound('pop'); }
+            else if (event.keyCode == 40 && d != "UP") { d = "DOWN"; playSound('pop'); }
+        }
+
+        function changeDir(dir) {
+            playSound('pop');
+            if (dir == "LEFT" && d != "RIGHT") d = "LEFT";
+            if (dir == "UP" && d != "DOWN") d = "UP";
+            if (dir == "RIGHT" && d != "LEFT") d = "RIGHT";
+            if (dir == "DOWN" && d != "UP") d = "DOWN";
+        }
+
+        function collision(head, array) {
+            for (let i = 0; i < array.length; i++) {
+                if (head.x == array[i].x && head.y == array[i].y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function draw() {
+            if (!gameActive) return;
+
+            ctx.fillStyle = "#fff0f5";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < snake.length; i++) {
+                ctx.fillStyle = (i == 0) ? "#ff1744" : "#ff80ab";
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+                ctx.strokeStyle = "#fff0f5";
+                ctx.strokeRect(snake[i].x, snake[i].y, box, box);
+            }
+
+            // Draw Food (Apple)
+            ctx.fillStyle = "#4caf50";
+            ctx.fillRect(food.x, food.y, box, box);
+
+            let snakeX = snake[0].x;
+            let snakeY = snake[0].y;
+
+            if (d == "LEFT") snakeX -= box;
+            if (d == "UP") snakeY -= box;
+            if (d == "RIGHT") snakeX += box;
+            if (d == "DOWN") snakeY += box;
+
+            // Check Eat Food
+            if (snakeX == food.x && snakeY == food.y) {
+                score++;
+                playSound('eat');
+                document.getElementById("scoreBoard").innerText = "Apel: " + score + " / 10";
+                
+                if (score >= 10) {
+                    gameActive = false;
+                    playSound('win');
+                    document.getElementById("scoreBoard").innerText = "🎉 KAMU MENANG! 🎉";
+                    document.getElementById("rewardBtn").style.display = "inline-block";
+                    clearInterval(game);
+                    return;
+                }
+
+                food = {
+                    x: Math.floor(Math.random() * 19 + 1) * box,
+                    y: Math.floor(Math.random() * 19 + 1) * box
+                };
+            } else {
+                snake.pop();
+            }
+
+            let newHead = { x: snakeX, y: snakeY };
+
+            // Game Over Rules
+            if (snakeX < 0 || snakeX >= canvas.width || snakeY < 0 || snakeY >= canvas.height || collision(newHead, snake)) {
+                playSound('over');
+                snake = [{ x: 9 * box, y: 10 * box }];
+                score = 0;
+                d = "RIGHT";
+                document.getElementById("scoreBoard").innerText = "Game Over! Coba lagi: 0 / 10";
+            } else {
+                snake.unshift(newHead);
+            }
+        }
+
+        let game = setInterval(draw, 120);
+    </script>
+
+</body>
+</html>
